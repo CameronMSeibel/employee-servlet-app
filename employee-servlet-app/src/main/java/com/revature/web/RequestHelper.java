@@ -2,6 +2,7 @@ package com.revature.web;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -73,6 +74,48 @@ public class RequestHelper {
 			// Shout out to Gavin for figuring this out -- 204 doesn't return a response
 			// body
 //				response.setStatus(204); // 204 meants successful connection to the server, but no content found
+		}
+	}
+
+	public static void processRegistration(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		// 1. Extract params
+		String firstname = request.getParameter("firstname");
+		String lastname = request.getParameter("lastname");
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		// 2. Construct an employee
+		Employee e = new Employee(firstname, lastname, username, password);
+		// 3. Call register() from service layer
+
+		// TODO: Better logic to handle runtime exceptions (duplicate usernames)
+
+		int id = eserv.register(e);
+		// 4. check ID for > 0, if so great success!
+		if (id > 0) {
+			e.setId(id);
+			HttpSession session = request.getSession();
+			session.setAttribute("user", e);
+			request.getRequestDispatcher("welcome.html").forward(request, response);
+		} else {
+			PrintWriter out = response.getWriter();
+			response.setContentType("text/html");
+			out.println("<h1>Failed to register</h1>");
+			out.println("<a href='index.html'>Back</a>");
+		}
+	}
+
+	public static void processEmployees(HttpServletRequest request, HttpServletResponse response) throws IOException {
+		List<Employee> employees = eserv.getAll();
+		// response.setContentType("application/json");
+		response.setContentType("text/html");
+		PrintWriter out = response.getWriter();
+		out.println("<h1>Employees</h1>");
+		for (Employee e : employees) {
+			out.println("<div>");
+			out.println("<h3>" + e.getFirstName() + " " + e.getLastName() + "</h3");
+			out.println("<p>ID: " + e.getId() + " | Username: " + e.getUsername() + "</p>");
+			out.println("</div> <br />");
 		}
 	}
 }
