@@ -3,7 +3,7 @@ const empsContainer = document.getElementById("emps-container");
 
 empsBtn.addEventListener("click", () => {
     const hostname = window.location.hostname;
-    fetch(`http://${hostname}:8080/employee-servlet-app/employees`)
+    fetch(`http://${hostname}/employee-servlet-app/employees`)
         .then(res => res.json())
         .then(data => {
             empsContainer.innerHTML += `
