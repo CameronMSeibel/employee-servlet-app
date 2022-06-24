@@ -12,7 +12,6 @@
 	</properties>
 
 	<dependencies>
-
 		<!-- The javax.servlet dependency is an api that gives us classes and interfaces 
 			that describe and define the contracts between a servlet class and the runtime 
 			environment provided for each instance of a class by a conforming servlet 
@@ -43,7 +42,6 @@
 			<version>42.2.5</version>
 		</dependency>
 
-
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -59,12 +57,7 @@
 			<artifactId>mockito-core</artifactId>
 			<version>4.1.0</version>
 		</dependency>
-
-
 	</dependencies>
-
-
-
 
 	<build>
 		<finalName>${project.artifactId}</finalName>

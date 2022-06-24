@@ -17,5 +17,4 @@ buildNumber.properties
 **/logs/*
 .vscode
 .metadata/
-hibernate.cfg.xml
 Servers/

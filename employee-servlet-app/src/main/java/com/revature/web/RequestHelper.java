@@ -107,15 +107,9 @@ public class RequestHelper {
 
 	public static void processEmployees(HttpServletRequest request, HttpServletResponse response) throws IOException {
 		List<Employee> employees = eserv.getAll();
-		// response.setContentType("application/json");
-		response.setContentType("text/html");
+		response.addHeader("Access-Control-Allow-Origin", "*");
+		response.setContentType("application/json");
 		PrintWriter out = response.getWriter();
-		out.println("<h1>Employees</h1>");
-		for (Employee e : employees) {
-			out.println("<div>");
-			out.println("<h3>" + e.getFirstName() + " " + e.getLastName() + "</h3");
-			out.println("<p>ID: " + e.getId() + " | Username: " + e.getUsername() + "</p>");
-			out.println("</div> <br />");
-		}
+		out.print(om.writeValueAsString(employees));
 	}
 }
